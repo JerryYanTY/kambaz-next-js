@@ -72,7 +72,7 @@ export default function Lab1() {
         <ul id="wd-my-books">
           <li>Dune</li>
           <li>Lord of the Rings</li>
-          <li>Ender&aposs Game</li>
+          <li>Ender&apos;s Game</li>
           <li>Red Mars</li>
           <li>The Forever War</li>
         </ul>
@@ -81,7 +81,7 @@ export default function Lab1() {
           <li>Harry Potter</li>
           <li>Three-Body</li>
           <li>The Chronicles of Narnia</li>
-          <li>Charlotte&aposs Web</li>
+          <li>Charlotte&apos;s Web</li>
           <li>Flowers for Algernon</li>
         </ul>
       </div>
@@ -170,8 +170,7 @@ export default function Lab1() {
       <div id="wd-images">
         <h4>Image tag</h4>
         Loading an image from the internet: <br />
-        <Image
-        alt=""
+        <img
           id="wd-starship"
           width={400}
           src="https://www.staradvertiser.com/wp-content/uploads/2021/08/web1_Starship-gap2.jpg"
@@ -179,7 +178,7 @@ export default function Lab1() {
         <br />
         Loading a local image:
         <br />
-        <Image id="wd-teslabot" alt="" src="/images/teslabot.jpg" height={200} />
+        <Image id="wd-teslabot" alt="" src="/images/teslabot.jpg" height={200} width={400}/>
       </div>
       <div id="wd-forms">
         <h4>Form Elements</h4>
@@ -190,7 +189,7 @@ export default function Lab1() {
           <label htmlFor="wd-text-fields-password">Password:</label>
           <input
             type="password"
-            value="123@#$asd"
+            defaultValue="123@#$asd"
             id="wd-text-fields-password"
           />
           <br />
@@ -201,14 +200,14 @@ export default function Lab1() {
           <input
             type="text"
             placeholder="Doe"
-            value="Wonderland"
+            defaultValue="Wonderland"
             title="The last name"
             id="wd-text-fields-last-name"
           />
           <h5>Text boxes</h5>
           <label>Biography:</label>
           <br />
-          <textarea id="wd-textarea" cols={30} rows={10}>
+          <textarea id="wd-textarea" cols={30} rows={10} defaultValue="
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
             elementum, nunc non pretium egestas, lectus ipsum bibendum risus,
             sit amet varius enim ipsum in metus. Curabitur quis ultricies
@@ -218,7 +217,7 @@ export default function Lab1() {
             Cras id lobortis leo, non tristique nibh. Morbi sed massa ipsum.
             Nulla mattis velit vel lorem fringilla ultrices. Sed a aliquet
             turpis. Donec tristique leo augue, tincidunt mattis risus rhoncus
-            sed.
+            sed.">
           </textarea>
           <h5 id="wd-radio-buttons">Radio buttons</h5>
           <label>Favorite movie genre:</label>
@@ -255,7 +254,7 @@ export default function Lab1() {
           <select id="wd-select-one-genre">
             <option value="COMEDY">Comedy</option>
             <option value="DRAMA">Drama</option>
-            <option selected value="SCIFI">
+            <option value="SCIFI">
               Science Fiction
             </option>
             <option value="FANTASY">Fantasy</option>
@@ -264,11 +263,11 @@ export default function Lab1() {
           <label htmlFor="wd-select-many-genre"> Favorite movie genres: </label>
           <br />
           <select multiple id="wd-select-many-genre">
-            <option value="COMEDY" selected>
+            <option value="COMEDY">
               Comedy
             </option>
             <option value="DRAMA"> Drama </option>
-            <option value="SCIFI" selected>
+            <option value="SCIFI">
               Science Fiction
             </option>
             <option value="FANTASY"> Fantasy </option>
@@ -284,7 +283,7 @@ export default function Lab1() {
           <label htmlFor="wd-text-fields-salary-start"> Starting salary:</label>
           <input
             type="number"
-            value="100000"
+            defaultValue="100000"
             placeholder="1000"
             id="wd-text-fields-salary-start"
           />
@@ -292,7 +291,7 @@ export default function Lab1() {
           <label htmlFor="wd-text-fields-rating"> Rating: </label>
           <input
             type="range"
-            value="4"
+            defaultValue="4"
             max="5"
             placeholder="Doe"
             id="wd-text-fields-rating"
