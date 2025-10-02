@@ -85,46 +85,86 @@ export default function Assignments() {
               </div>
             </ListGroupItem>
           </ListGroup>
+          <ListGroup className="wd-assignment-list rounded-0">
+            <ListGroupItem className="wd-assignment-list-item p-3 ps-1">
+              <div className="d-flex align-items-center gap-2">
+                <BsGripVertical className="me-2 fs-3" />
+                <LuNotebookPen className="me-2 fs-3" style={{color:"green"}}/>
+                <div className="flex-fill">
+                  <Link href="/Courses/1234/Assignments/1"
+                    className="wd-assignment-link text-decoration-none text-black">
+                    A3 - JAVASCRIPT + REACT
+                  </Link>
+                  <div className="small mt-1">
+                    <span className="text-danger">Multiple Modules</span>
+                    <span className="mx-2"> | </span>
+                    <b>Not available until</b>
+                    <span className="ms-1">May 20 at 12:00am</span>
+                    <span className="mx-2"> | </span>
+                    <br/>
+                    <b>Due </b>
+                    <span className="ms-1">May 27 at 11:59pm</span>
+                    <span className="mx-2"> | </span>
+                    <span> 100 pts</span>
+                  </div>
+                </div>
+                <div className="d-flex align-items-center">
+                <AssignmentItemControlButtons />
+                </div>
+              </div>
+            </ListGroupItem>
+          </ListGroup>
         </ListGroupItem>
+        <ListGroupItem className="wd-assignment p-0 mb-5 fs-5 border-gray">
+          <div className="wd-assignment-title d-flex align-items-center gap-2 p-3 ps-2 bg-secondary">
+            <BsGripVertical className="me-2 fs-3" />
+            <span className="fw-semibold">
+              QUIZZES
+            </span>
+            <div className="d-flex align-items-center gap-2 ms-auto">
+
+              <Badge pill bg="transparent" text="secondary"
+                className="me-2 border px-3 py-1 small text-black text-center float-end">
+                10% of Total
+              </Badge>
+              <AssignmentControlButtons />
+            </div>
+          </div>
+          </ListGroupItem>
+          <ListGroupItem className="wd-assignment p-0 mb-5 fs-5 border-gray">
+          <div className="wd-assignment-title d-flex align-items-center gap-2 p-3 ps-2 bg-secondary">
+            <BsGripVertical className="me-2 fs-3" />
+            <span className="fw-semibold">
+            EXAMS
+            </span>
+            <div className="d-flex align-items-center gap-2 ms-auto">
+
+              <Badge pill bg="transparent" text="secondary"
+                className="me-2 border px-3 py-1 small text-black text-center float-end">
+                30% of Total
+              </Badge>
+              <AssignmentControlButtons />
+            </div>
+          </div>
+          </ListGroupItem>
+          <ListGroupItem className="wd-assignment p-0 mb-5 fs-5 border-gray">
+          <div className="wd-assignment-title d-flex align-items-center gap-2 p-3 ps-2 bg-secondary">
+            <BsGripVertical className="me-2 fs-3" />
+            <span className="fw-semibold">
+            PROJECTS
+            </span>
+            <div className="d-flex align-items-center gap-2 ms-auto">
+
+              <Badge pill bg="transparent" text="secondary"
+                className="me-2 border px-3 py-1 small text-black text-center float-end">
+                20% of Total
+              </Badge>
+              <AssignmentControlButtons />
+            </div>
+          </div>
+          </ListGroupItem>
       </ListGroup>
-      <h3 id="wd-assignments-title">
-        ASSIGNMENTS 40% of Total <button>+</button>{" "}
-      </h3>
-      <ul id="wd-assignment-list">
-        <li className="wd-assignment-list-item">
-          <Link href="/Courses/1234/Assignments/1" className="wd-assignment-link">
-            A1 - ENV + HTML
-          </Link>
-          <br />
-          Multiple Modules | <b>Not available until</b> May 5 at 12:00am |
-          <b>Due </b>May 13 at 11:59pm | 100 pts
-        </li>
-        <li className="wd-assignment-list-item">
-          <Link href="/Courses/1234/Assignments/2" className="wd-assignment-link">
-            A2 - CSS + BOOTSTRAP
-          </Link>
-          <br />
-          Multiple Modules | <b>Not available until</b> May 13 at 12:00am |
-          <b>Due </b>May 20 at 11:59pm | 100 pts
-        </li>
-        <li className="wd-assignment-list-item">
-          <Link href="/Courses/1234/Assignments/3" className="wd-assignment-link">
-            A3 - JAVASCRIPT + REACT
-          </Link>
-          <br />
-          Multiple Modules | <b>Not available until</b> May 20 at 12:00am |
-          <b>Due </b>May 27 at 11:59pm | 100 pts
-        </li>
-      </ul>
-      <h3 id="wd-quizzes-title">
-        QUIZZES 10% of Total <button>+</button>{" "}
-      </h3>
-      <h3 id="wd-exams-title">
-        EXAMS 30% of Total <button>+</button>{" "}
-      </h3>
-      <h3 id="wd-projects-title">
-        PROJECTS 20% of Total <button>+</button>{" "}
-      </h3>
+      
     </div>
   );
 }
