@@ -18,25 +18,19 @@ body * {
     border-left: 3px solid black !important;
 }
 
-#wd-kambaz-navigation {
-    background-color: black;
-}
-
-#wd-kambaz-navigation .list-group-item {
-    background-color: black;
-    color: white;
-    border: none;
-    text-align: center;
-}
-
-#wd-kambaz-navigation .list-group-item a{
-    color: white;
-    text-decoration: none;
-}
-
-
-#wd-kambaz-navigation .list-group-item.active,
-#wd-kambaz-navigation .list-group-item.active a {
-    background-color: white;
-    color: red;
-}
+.btn-secondary {
+    --bs-btn-color: #000 !important;
+    --bs-btn-bg: #c7cdd1 !important;
+    --bs-btn-border-color: #c7cdd1 !important;
+    --bs-btn-hover-color: #fff !important;
+  }
+  .bg-secondary {
+    --bs-secondary-rgb: 199, 205, 209;
+  }
+  .list-group-item {
+    --bs-list-group-border-color: gray;
+  }
+  .wd-lesson {
+    border-left: 3px solid green !important;
+  }
+  
