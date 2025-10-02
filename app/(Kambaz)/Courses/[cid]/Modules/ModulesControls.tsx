@@ -1,6 +1,6 @@
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "react-bootstrap";
 import { FaPlus } from "react-icons/fa6";
-import GreenCheckmark from "./GreenCheckmark";
+import GreenCheckmark from "../Assignments/GreenCheckmark";
 export default function ModulesControls() {
  return (
    <div id="wd-modules-controls" className="text-nowrap">
