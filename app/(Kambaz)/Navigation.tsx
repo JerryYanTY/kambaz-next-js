@@ -1,9 +1,10 @@
 import { AiOutlineDashboard } from "react-icons/ai";
 import { IoCalendarOutline } from "react-icons/io5";
-import { LiaBookSolid, LiaCogSolid } from "react-icons/lia";
+import { LiaBookSolid} from "react-icons/lia";
+import { FaLaptopCode } from "react-icons/fa";
 import { FaInbox, FaRegCircleUser } from "react-icons/fa6";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
-import NotFound from "../not-found";
+
 
 import Link from "next/link";
 export default function KambazNavigation() {
@@ -14,6 +15,7 @@ export default function KambazNavigation() {
       as="a" href="https://www.northeastern.edu/" id="wd-neu-link" target="_blank">
       <img src="/images/NEU.png" width="75px" alt="Northeastern University"/>
       </ListGroupItem>
+
       <ListGroupItem className="bg-black border-0 text-center">
       <Link href="/Account" id="wd-account-link" className="text-white text-decoration-none">
       <FaRegCircleUser className="fs-1 text-white"/>
@@ -21,6 +23,7 @@ export default function KambazNavigation() {
         Account
         </Link>
       </ListGroupItem>
+
       <ListGroupItem className="bg-white border-0 text-center">
       <Link href="/Dashboard" id="wd-dashboard-link" className="text-danger text-decoration-none">
       <AiOutlineDashboard className="fs-1 text-danger"/>
@@ -28,19 +31,37 @@ export default function KambazNavigation() {
       Dashboard
       </Link>
       </ListGroupItem>
+
       <ListGroupItem className="bg-black border-0 text-center">
-      <Link href="/Dashboard" id="wd-course-link">
+      <Link href="/Dashboard" id="wd-course-link" className="text-white text-decoration-none">
+      <LiaBookSolid className="fs-1 text-danger" />
+      <br/>
       Courses
       </Link>
       </ListGroupItem>
-      <Link href="/Calendar" id="wd-calendar-link">
+
+      <ListGroupItem className="bg-black border-0 text-center">
+      <Link href="/Calendar" id="wd-calendar-link" className="text-white text-decoration-none">
+      <IoCalendarOutline className="fs-1 text-danger" />
+      <br/>
       Calendar
-      </Link><br/>
-      <Link href="/Inbox" id="wd-inbox-link">
+      </Link>
+      </ListGroupItem>
+
+      <ListGroupItem className="bg-black border-0 text-center">
+      <Link href="/Inbox" id="wd-inbox-link" className="text-white text-decoration-none">
+      <FaInbox className="fs-1 text-danger"/>
+      <br/>
       Inbox
-      </Link><br/>
-      <Link href="/Labs" id="wd-labs-link">
+      </Link>
+      </ListGroupItem>
+
+      <ListGroupItem className="bg-black border-0 text-center">
+      <Link href="/Labs" id="wd-labs-link" className="text-white text-decoration-none">
+      <FaLaptopCode className="fs-1 text-danger"/>
+      <br/>
       Labs
-      </Link><br/>
+      </Link>
+      </ListGroupItem>
     </ListGroup>
 );}
