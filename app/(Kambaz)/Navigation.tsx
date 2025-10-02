@@ -7,6 +7,7 @@ import { ListGroup, ListGroupItem } from "react-bootstrap";
 
 
 import Link from "next/link";
+
 export default function KambazNavigation() {
   return (
     <ListGroup className="rounded-0 position-fixed bottom-0 top-0 d-none d-md-block bg-black z-2" style={{ width: 115 }}
@@ -16,9 +17,9 @@ export default function KambazNavigation() {
       <img src="/images/NEU.png" width="75px" alt="Northeastern University"/>
       </ListGroupItem>
 
-      <ListGroupItem className="bg-black border-0 text-center">
+      <ListGroupItem className="border-0 text-center bg-black ">
       <Link href="/Account" id="wd-account-link" className="text-white text-decoration-none">
-      <FaRegCircleUser className="fs-1 text-white"/>
+      <FaRegCircleUser className="fs-1 text-danger"/>
       <br/>  
         Account
         </Link>
