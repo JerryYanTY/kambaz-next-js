@@ -7,6 +7,8 @@ import ConditionalOutputIfElse from "./ConditionalOutputIfElse";
 import ConditionalOutputInline from "./ConditionalOutputInline";
 import LegacyFunctions from "./Functions";
 import ArrowFunctions from "./ArrowFunctions";
+import ImpliedReturn from "./ImpliedReturn";
+import TemplateLiterals from "./TemplateLiterals";
 
 
 
@@ -23,5 +25,7 @@ export default function Lab3() {
       <ConditionalOutputInline/>
       <LegacyFunctions/>
       <ArrowFunctions/>
+      <ImpliedReturn/>
+      <TemplateLiterals/>
     </div>
 );}
