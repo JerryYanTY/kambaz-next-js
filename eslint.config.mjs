@@ -22,9 +22,10 @@ const eslintConfig = [
   },
   {
     "rules":{
-      "prefer-const":"off"
+      "prefer-const":"off",
+      "no-var": "off",
     }
-  }
+  },
 ];
 
 export default eslintConfig;
