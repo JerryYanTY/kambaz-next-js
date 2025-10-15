@@ -21,8 +21,8 @@ import JsonStringify from "./JsonStringify";
 import House from "./House";
 import Spreading from "./Spreader";
 import Destructing from "./Destructing";
-
-
+import FunctionDestructing from "./FunctionDestructing";
+import DestructingImports from "./DestructingImports";
 
 export default function Lab3() {
   return (
@@ -51,5 +51,7 @@ export default function Lab3() {
       <House/>
       <Spreading/>
       <Destructing/>
+      <FunctionDestructing/>
+      <DestructingImports/>
     </div>
 );}
