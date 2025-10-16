@@ -18,7 +18,9 @@ export default function CourseNavigation() {
     return (
       <div id="wd-courses-navigation" className="wd list-group fs-5 rounded-0">
       {links.map((label) => {
-        const href = `/Courses/${cid}/${label}`;
+        const href = label === "People" 
+        ? `/Courses/${cid}/People/Table`
+        :`/Courses/${cid}/${label}`;
         const isActive = pathname.includes(label);
 
         return (
