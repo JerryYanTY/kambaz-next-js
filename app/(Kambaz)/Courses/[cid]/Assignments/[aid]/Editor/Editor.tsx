@@ -5,16 +5,39 @@ import { FormLabel, FormControl } from "react-bootstrap";
 import { InputGroup } from "react-bootstrap";
 import { Row, Col } from "react-bootstrap";
 import { BsCalendar2Event } from "react-icons/bs";
+import { useParams } from "next/navigation";
+
+import * as db from "../../../../../Database"
 
 export default function AssignmentEditor() {
-  const [submissionType, setSubmissionType] = useState("Online");
+  const {cid, aid} = useParams();
+  const assignments = db.assignments;
+  const assignment = Array.isArray(assignments)
+  ? assignments.find((a) => a.course === cid && a._id == aid) || null :
+  null;
+  const initialSubmissionType = assignment?.online_or_paper === "paper" ? "Paper-Copy" : "Online";
+  const [submissionType, setSubmissionType] = useState(initialSubmissionType);
+
+  const hasSubmissionType = (key: any) =>
+    Array.isArray(assignment?.submission_types) &&
+    assignment.submission_types.includes(key);
+
+  const toLocalDateTime = (iso:any) => {
+    if(!iso) return "";
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) 
+      return "";
+    const offset = d.getTimezoneOffset();
+    const local = new Date(d.getTime() - offset * 60000);
+    return local.toISOString().slice(0,16);
+  }
 
   return (
     <div id="wd-assignments-editor">
       <Form>
         <div className="form-group mb-3" id="wd-name">
           <FormLabel>Assignment Name</FormLabel>
-          <FormControl type="text" defaultValue="A1 - ENV + HTML" />
+          <FormControl type="text" defaultValue={assignment?.title } />
         </div>
 
         <div className="form-group mb-3" id="wd-description">
@@ -24,7 +47,7 @@ export default function AssignmentEditor() {
           <FormControl
             as="textarea"
             rows={8}
-            defaultValue="some description..." />
+            defaultValue={assignment?.description} />
         </div>
 
 
@@ -33,7 +56,7 @@ export default function AssignmentEditor() {
             Points
           </FormLabel>
           <Col sm={10}>
-            <FormControl type="number" defaultValue={100} />
+            <FormControl type="number" defaultValue={assignment?.points} />
           </Col>
         </Row>
 
@@ -57,7 +80,7 @@ export default function AssignmentEditor() {
             Display Grade As
           </FormLabel>
           <Col sm={10}>
-          <FormSelect defaultValue="Points">
+          <FormSelect defaultValue={assignment?.grading_type === "percentage" ? "Percentage" : "Points"}>
             <option value="Points">Points</option>
             <option value="Percentage">Percentage</option>
           </FormSelect>
@@ -84,11 +107,26 @@ export default function AssignmentEditor() {
             Online Entry Options
             </Form.Label>
           <div>
-            <Form.Check id="wd-text-entry" type="checkbox" label="Text Entry" />
-            <Form.Check id="wd-website-url" type="checkbox" label="Website URL" />
-            <Form.Check id="wd-media-recordings" type="checkbox" label="Media Recordings" />
-            <Form.Check id="wd-student-annotation" type="checkbox" label="Student Annotation" />
-            <Form.Check id="wd-file-upload" type="checkbox" label="File Upload" />
+            <Form.Check id="wd-text-entry" 
+            type="checkbox" 
+            label="Text Entry" 
+            defaultChecked = {hasSubmissionType("text_entry")}/>
+            <Form.Check id="wd-website-url" 
+            type="checkbox" 
+            label="Website URL" 
+            defaultChecked = {hasSubmissionType("url")}/>
+            <Form.Check id="wd-media-recordings" 
+            type="checkbox" 
+            label="Media Recordings" 
+            defaultChecked = {hasSubmissionType("media")}/>
+            <Form.Check id="wd-student-annotation" 
+            type="checkbox" 
+            label="Student Annotation" 
+            defaultChecked = {hasSubmissionType("annotation")}/>
+            <Form.Check id="wd-file-upload" 
+            type="checkbox" 
+            label="File Upload" 
+            defaultChecked = {hasSubmissionType("online_upload")}/>
           </div>      
         </div>
               </>
@@ -107,14 +145,14 @@ export default function AssignmentEditor() {
             <FormLabel className="fw-semibold mb-2">
               Assign To
             </FormLabel>
-            <FormControl type="text" defaultValue='Everyone'> 
+            <FormControl type="text" defaultValue={assignment?.assign_to}> 
             </FormControl>
             <div className="form-group mb-3" id="wd-due-date">
               <Form.Label className="fw-semibold">
                 Due
                 </Form.Label>
               <InputGroup>
-                <FormControl type="datetime-local" defaultValue="2024-05-13 23:59:59" />
+                <FormControl type="datetime-local" defaultValue={toLocalDateTime(assignment?.due)} />
                 <InputGroup.Text><BsCalendar2Event /></InputGroup.Text>
               </InputGroup>
             </div>
@@ -126,7 +164,7 @@ export default function AssignmentEditor() {
                   Available from
                 </FormLabel>
                 <InputGroup>
-                <FormControl type="datetime-local" defaultValue="2024-05-12 23:59:59" />
+                <FormControl type="datetime-local" defaultValue={toLocalDateTime(assignment?.available_from)} />
                 <InputGroup.Text><BsCalendar2Event /></InputGroup.Text>    
                 </InputGroup>            
               </div>
@@ -137,7 +175,7 @@ export default function AssignmentEditor() {
                 Until
               </FormLabel>
               <InputGroup>
-                <FormControl type="datetime-local" defaultValue="2024-05-20 23:59:59" />
+                <FormControl type="datetime-local" defaultValue={toLocalDateTime(assignment?.available_until)} />
                 <InputGroup.Text><BsCalendar2Event /></InputGroup.Text>    
                 </InputGroup>
               </div>

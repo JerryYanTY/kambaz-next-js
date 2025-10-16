@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import AssignmentsControls from "./AssignmentsControls";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
@@ -5,7 +6,31 @@ import { BsGripVertical } from "react-icons/bs";
 import AssignmentControlButtons from "./AssignmentControlButtons";
 import Badge from "react-bootstrap/Badge"; import AssignmentItemControlButtons from "./AssignmentItemControlButtons";
 import { LuNotebookPen } from "react-icons/lu";
+import * as db from "../../../Database"
+import { useParams } from "next/navigation";
+
+
 export default function Assignments() {
+  const {cid} = useParams();
+  const assignments = db.assignments;
+  const courseAssignments = Array.isArray(assignments)
+  ? assignments.filter((a) => a.course === cid)
+  : [];
+  const formatDueDate = (date: any) => {
+    if(!date) return "No Date";
+    const d = new Date(date);
+    if (Number.isNaN(d.getTime())) return "No Date";
+
+    return d.toLocaleString(
+      [],{
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true
+      }
+    ).replace(","," at");
+  };
   return (
     <div id="wd-assignments">
 
@@ -27,7 +52,49 @@ export default function Assignments() {
               <AssignmentControlButtons />
             </div>
           </div>
-          <ListGroup className="wd-assignment-list rounded-0">
+          {courseAssignments.map((a) => (
+            <ListGroup key={a._id} className="wd-assignment-list rounded-0">
+              <ListGroupItem className="wd-assignment-list-item p-3 ps-1">
+                <div className="d-flex align0items-center gap-2">
+                  <BsGripVertical className="me-2 fs-3" />
+                  <LuNotebookPen className="me-2 fs-3"/>
+                  <div className="flex-fill">
+                    <Link
+                      href={`/Courses/${cid}/Assignments/${a._id}`}
+                      className="wd-assignment-link text-decoration-none text-black">
+                        {a.title}
+                      </Link>
+
+                      <div className="small mt-1">
+                        <span className="text-danger">
+                          {a.modules}
+                        </span>
+                        <span className="mx-2"> | </span>
+                        <b>Not Available Until</b>
+                        <span className="ms-1">
+                          {formatDueDate(a.available_from)}
+                        </span>
+                        <span className="mx-2"> | </span>
+                        <b>Due</b>
+                        <span className="ms-1">
+                          {formatDueDate(a.due)}
+                        </span>
+                        <span className="ms-2"> | </span>
+                        <span>
+                          {a.points ?? 100} pts
+                        </span>
+                      </div>
+                  </div>
+                  <div className="d-flex align-items-center">
+                    <AssignmentItemControlButtons />
+                  </div>
+                </div>
+              </ListGroupItem>
+            </ListGroup>
+          ))}
+        
+
+          {/* <ListGroup className="wd-assignment-list rounded-0">
             <ListGroupItem className="wd-assignment-list-item p-3 ps-1">
               <div className="d-flex align-items-center gap-2">
                 <BsGripVertical className="me-2 fs-3" />
@@ -113,8 +180,8 @@ export default function Assignments() {
                 </div>
               </div>
             </ListGroupItem>
-          </ListGroup>
-        </ListGroupItem>
+          </ListGroup> */}
+        </ListGroupItem> 
         <ListGroupItem className="wd-assignment p-0 mb-5 fs-5 border-gray">
           <div className="wd-assignment-title d-flex align-items-center gap-2 p-3 ps-2 bg-secondary">
             <BsGripVertical className="me-2 fs-3" />
