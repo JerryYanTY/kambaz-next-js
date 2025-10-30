@@ -5,7 +5,12 @@ import PassingDataOnEvent from "./PassingDataOnEvent";
 import PassingFunctions from "./PassingFunctions";
 import EventObject from "./EventObject";
 import Counter from "./Counter";
-
+import BooleanStateVariables from "./BooleanStateVariables";
+import StringStateVariables from "./StringStateVariables";
+import DateStateVariable from "./DateStateVariable";
+import ObjectStateVariable from "./ObjectStateVariable";
+import ArrayStateVariable from "./ArraryStateVariable";
+import ParentStateComponent from "./ParentStateComponent";
 
 export default function lab4() {
     function sayHello() {
@@ -19,6 +24,12 @@ export default function lab4() {
             <PassingFunctions theFunction={sayHello}/>
             <EventObject/>
             <Counter/>
+            <BooleanStateVariables/>
+            <StringStateVariables/>
+            <DateStateVariable/>
+            <ObjectStateVariable/>
+            <ArrayStateVariable/>
+            <ParentStateComponent/>
         </div>
     ) ;
 }
