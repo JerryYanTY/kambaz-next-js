@@ -1,7 +1,7 @@
 import HelloRedux from "./HelloRedux/page";
 import CounterRedux from "./CouterRedux/page";
 import AddRedux from "./AddRedux/page";
-
+import TodoList from "./todos/TodoList";
 
 export default function ReduxExamples() {
     return (
@@ -10,6 +10,7 @@ export default function ReduxExamples() {
             <HelloRedux/>
             <CounterRedux/>
             <AddRedux/>
+            <TodoList/>
         </div>
     );
 };
