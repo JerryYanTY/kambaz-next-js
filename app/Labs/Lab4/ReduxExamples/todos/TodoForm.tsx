@@ -1,3 +1,4 @@
+"use client";
 import { ListGroupItem } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { FormControl } from "react-bootstrap";
