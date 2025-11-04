@@ -6,9 +6,14 @@ import Link from "next/link";
 import { Row, Col } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import * as db from "../Database";
+import { useDispatch, useSelector } from "react-redux";
+import { addNewCourse, deleteCourse, updateCourse, setCourses } from "../Courses/reducer";
+import { RootState } from "../store";
 import { CardBody, CardImg, CardText, CardTitle, Card } from "react-bootstrap";
 export default function Dashboard() {
-  const [courses, setCourses] = useState<any[]>(db.courses);
+  const { courses } = useSelector((state: RootState) => state.coursesReducer);
+  const dispatch = useDispatch();
+  // const [courses, setCourses] = useState<any[]>(db.courses);
   const [course, setCourse] = useState<any>({
     _id: "0",
     name: "new course",
@@ -20,25 +25,25 @@ export default function Dashboard() {
     image: "/images/reactjs.jpg",
     description: "Some description",
   });
-  const addNewCourse = () => {
-    const newCourse = { ...course, _id: uuidv4() };
-    setCourses([...courses, newCourse]);
-  };
-  const deleteCourse = (courseId: string) => {
-    setCourse(courses.filter((course) => course._id !== courseId));
-  };
-  const updateCourse = () => {
-    setCourses(
-      courses.map((c) => {
-        if (c._id === course._id) {
-          return course;
-        }
-        else {
-          return c;
-        }
-      })
-    );
-  };
+  // const addNewCourse = () => {
+  //   const newCourse = { ...course, _id: uuidv4() };
+  //   setCourses([...courses, newCourse]);
+  // };
+  // const deleteCourse = (courseId: string) => {
+  //   setCourse(courses.filter((course) => course._id !== courseId));
+  // };
+  // const updateCourse = () => {
+  //   setCourses(
+  //     courses.map((c) => {
+  //       if (c._id === course._id) {
+  //         return course;
+  //       }
+  //       else {
+  //         return c;
+  //       }
+  //     })
+  //   );
+  // };
   return (
     <div id="wd-dashboard">
       <h1 id="wd-dashboard-title">Dashboard</h1> <hr />
@@ -47,13 +52,14 @@ export default function Dashboard() {
         <Button
           className="btn btn-primary float-end"
           id="wd-add-new-course-click"
-          onClick={addNewCourse}
+          onClick={()=>dispatch(addNewCourse(course))}
         >
           Add
         </Button>
         <Button
         className="btn btn-warning float-end me-2"
-        onClick={updateCourse} id="wd-update-course-click">
+        onClick={() => dispatch(updateCourse(course))} 
+        id="wd-update-course-click">
           Update
         </Button>
       </h5>
@@ -106,8 +112,8 @@ export default function Dashboard() {
 
                     <Button
                       onClick={(event) => {
-                        event.preventDefault;
-                        deleteCourse(course._id);
+                        event.preventDefault();
+                        dispatch(deleteCourse(course._id));
                       }}
                       className="btn btn-danger float-end"
                       id="wd-delete-course-click"
