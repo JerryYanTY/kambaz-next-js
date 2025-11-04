@@ -19,18 +19,20 @@ export default function Dashboard() {
     const newCourse = {...course, _id: uuidv4()};
     setCourses([...courses,newCourse]);
   };
-  
+  const deleteCourse = (courseId: string) => {
+    setCourse(courses.filter((course)=>course._id !== courseId));
+  };
   return (
     <div id="wd-dashboard">
       <h1 id="wd-dashboard-title">Dashboard</h1> <hr />
       <h5>New Course
-        <button className="btn btn-primary float-end"
+        <Button className="btn btn-primary float-end"
                 id = "wd-add-new-course-click"
                 onClick={addNewCourse}>Add
-        </button>
+        </Button>
       </h5>
       <br/>
-      <FormControl value={course.name} className="mb-2"
+      <FormControl value={course.name ?? ""} className="mb-2"
       onChange={(e)=>setCourse({...course, name:e.target.value})}/>
 
       <FormControl value={course.description} as="textarea" rows={3}
@@ -67,6 +69,14 @@ export default function Dashboard() {
                       {course.description}{" "}
                     </CardText>
                     <Button variant="primary"> Go </Button>
+                    <Button onClick={(event)=>{
+                      event.preventDefault;
+                      deleteCourse(course._id);
+                    }}
+                    className="btn btn-danger float-end"
+                    id = "wd-delete-course-click">
+                    Delete
+                    </Button>
                   </CardBody>
                 </Link>
               </Card>
