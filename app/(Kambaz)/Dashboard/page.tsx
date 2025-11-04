@@ -27,6 +27,18 @@ export default function Dashboard() {
   const deleteCourse = (courseId: string) => {
     setCourse(courses.filter((course) => course._id !== courseId));
   };
+  const updateCourse = () => {
+    setCourses(
+      courses.map((c) => {
+        if (c._id === course._id) {
+          return course;
+        }
+        else {
+          return c;
+        }
+      })
+    );
+  };
   return (
     <div id="wd-dashboard">
       <h1 id="wd-dashboard-title">Dashboard</h1> <hr />
@@ -38,6 +50,11 @@ export default function Dashboard() {
           onClick={addNewCourse}
         >
           Add
+        </Button>
+        <Button
+        className="btn btn-warning float-end me-2"
+        onClick={updateCourse} id="wd-update-course-click">
+          Update
         </Button>
       </h5>
       <br />
