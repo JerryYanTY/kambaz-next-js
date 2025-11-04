@@ -2,11 +2,9 @@
 import { ReactNode, useState } from "react";
 import { FaAlignJustify } from "react-icons/fa";
 import CourseNavigation from "./Navigation";
-import { courses } from "../../Database";
-import Breadcrumb from "./Breadcrumb";
 import { useParams } from "next/navigation";
 import { useSelector } from "react-redux";
-import { RootState } from "@reduxjs/toolkit/query";
+import { RootState } from "../../store";
 import { Button } from "react-bootstrap";
 
 export default function CoursesLayout(
