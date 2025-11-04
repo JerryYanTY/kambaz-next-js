@@ -1,13 +1,42 @@
+"use client";
+import { FormControl } from "react-bootstrap";
+import React, { useState} from "react";
+import {v4 as uuidv4} from "uuid";
 import Link from "next/link";
 import { Row, Col } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import * as db from "../Database";
 import { CardBody, CardImg, CardText, CardTitle, Card } from "react-bootstrap";
 export default function Dashboard() {
-  const courses = db.courses;
+  const [courses, setCourses] = useState<any[]>(db.courses);
+  const [course, setCourse]= useState<any>({
+    _id: "0", name: "new course", number: "new number",
+    startDate: "2023-09-29",endDate: "2023-12-15",
+    department: "Some Department", credits: "4",
+    image: "/images/reactjs.jpg", description: "Some description"
+  });
+  const addNewCourse=()=>{
+    const newCourse = {...course, _id: uuidv4()};
+    setCourses([...courses,newCourse]);
+  };
+  
   return (
     <div id="wd-dashboard">
       <h1 id="wd-dashboard-title">Dashboard</h1> <hr />
+      <h5>New Course
+        <button className="btn btn-primary float-end"
+                id = "wd-add-new-course-click"
+                onClick={addNewCourse}>Add
+        </button>
+      </h5>
+      <br/>
+      <FormControl value={course.name} className="mb-2"
+      onChange={(e)=>setCourse({...course, name:e.target.value})}/>
+
+      <FormControl value={course.description} as="textarea" rows={3}
+      onChange={(e)=>setCourse({...course, description: e.target.value})}/>
+      <hr/>
+
       <h2 id="wd-dashboard-published">
         Published Courses ({courses.length})
       </h2>
