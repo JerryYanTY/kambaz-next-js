@@ -3,6 +3,7 @@ import { FormControl } from "react-bootstrap";
 import React, { useState } from "react";
 // import { v4 as uuidv4 } from "uuid";
 import Link from "next/link";
+import type {User} from "../Account/reducer";
 import { Row, Col } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import * as db from "../Database";
@@ -12,7 +13,7 @@ import { RootState } from "../store";
 import { CardBody, CardImg, CardText, CardTitle, Card } from "react-bootstrap";
 export default function Dashboard() {
   const { courses } = useSelector((state: RootState) => state.coursesReducer);
-  const { currentUser } = useSelector((state: RootState) => state.accountReducer);
+  const currentUser = useSelector<RootState, User|null>((s) => s.accountReducer.currentUser);
   const { enrollments } = db; 
   const dispatch = useDispatch();
   // const [courses, setCourses] = useState<any[]>(db.courses);
@@ -29,15 +30,8 @@ export default function Dashboard() {
   });
 
   if (!currentUser) {
-    return false;
+    return <p>Please log in to view your courses.</p>;
   }
-
-  const enrolledCourses = courses.filter((course) =>
-  enrollments.some(
-    (enrollment) =>
-      enrollment.user === currentUser._id &&
-      enrollment.course === course._id
-  ));
   // const addNewCourse = () => {
   //   const newCourse = { ...course, _id: uuidv4() };
   //   setCourses([...courses, newCourse]);
@@ -93,7 +87,13 @@ export default function Dashboard() {
       <hr />
       <div id="wd-dashboard-courses">
         <Row xs={1} md={5} className="g-4">
-          {enrolledCourses
+
+          {courses.filter((course) =>
+          enrollments.some(
+            (enrollment) =>
+              enrollment.user === currentUser._id &&
+              enrollment.course === course._id
+            ))
           .map((course) => (
             <Col
               key={course._id}
