@@ -82,10 +82,10 @@ export default function Dashboard() {
       <hr />
       <div id="wd-dashboard-courses">
         <Row xs={1} md={5} className="g-4">
-          {courses.filter((course) =>
+          {currentUser && courses.filter((course) =>
           enrollments.some(
             (enrollment) =>
-              enrollment.user === currentUser?._id &&
+              enrollment.user === currentUser._id &&
               enrollment.course === course._id
             ))
           .map((course) => (
