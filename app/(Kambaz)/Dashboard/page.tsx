@@ -27,6 +27,17 @@ export default function Dashboard() {
     image: "/images/reactjs.jpg",
     description: "Some description",
   });
+
+  if (!currentUser) {
+    return false;
+  }
+
+  const enrolledCourses = courses.filter((course) =>
+  enrollments.some(
+    (enrollment) =>
+      enrollment.user === currentUser._id &&
+      enrollment.course === course._id
+  ));
   // const addNewCourse = () => {
   //   const newCourse = { ...course, _id: uuidv4() };
   //   setCourses([...courses, newCourse]);
@@ -82,12 +93,7 @@ export default function Dashboard() {
       <hr />
       <div id="wd-dashboard-courses">
         <Row xs={1} md={5} className="g-4">
-          {currentUser && courses.filter((course) =>
-          enrollments.some(
-            (enrollment) =>
-              enrollment.user === currentUser._id &&
-              enrollment.course === course._id
-            ))
+          {enrolledCourses
           .map((course) => (
             <Col
               key={course._id}
