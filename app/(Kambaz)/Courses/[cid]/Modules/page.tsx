@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import ModulesControls from "./ModulesControls";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
 import LessonControlButtons from "./LessonControlButtons";
@@ -11,9 +12,16 @@ import * as db from "../../../Database";
 export default function Modules() {
   const [modules, setModules] = useState<any[]>(db.modules);
   const { cid } = useParams();
+  const [moduleName, setModuleName] = useState("");
+  const addModule = () =>{
+    setModules([...modules, {_id: uuidv4(), name: moduleName, course: cid, lessons: []}]);
+    setModuleName("");
+  }
   return (
     <div>
-      <ModulesControls />
+      <ModulesControls setModuleName={setModuleName}
+      moduleName={moduleName}
+      addModule={addModule} />
       <br /> <br />
       <br />
       <br />
