@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import ModulesControls from "./ModulesControls";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
 import LessonControlButtons from "./LessonControlButtons";
@@ -8,8 +9,8 @@ import { useParams } from "next/navigation";
 import * as db from "../../../Database";
 
 export default function Modules() {
+  const [modules, setModules] = useState<any[]>(db.modules);
   const { cid } = useParams();
-  const modules = db.modules;
   return (
     <div>
       <ModulesControls />

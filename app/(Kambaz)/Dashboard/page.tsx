@@ -1,11 +1,11 @@
 "use client";
 import { FormControl } from "react-bootstrap";
 import React, { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+// import { v4 as uuidv4 } from "uuid";
 import Link from "next/link";
 import { Row, Col } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-import * as db from "../Database";
+// import * as db from "../Database";
 import { useDispatch, useSelector } from "react-redux";
 import { addNewCourse, deleteCourse, updateCourse, setCourses } from "../Courses/reducer";
 import { RootState } from "../store";
