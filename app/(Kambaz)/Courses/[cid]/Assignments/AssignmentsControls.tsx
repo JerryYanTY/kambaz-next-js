@@ -5,7 +5,7 @@ import { CiSearch } from "react-icons/ci";
 import { InputGroup } from "react-bootstrap";
 import InputGroupText from "react-bootstrap/esm/InputGroupText";
 
-export default function AssignmentsControls() {
+export default function AssignmentsControls({ cid }: {cid: any}) {
     return (
         <div id="wd-assignments-controls" className="text-nowrap d-flex justify-content-end gap-2">
             <InputGroup style={{ maxWidth: "250px" }} className="me-auto">
@@ -14,7 +14,11 @@ export default function AssignmentsControls() {
                 </InputGroupText>
                 <FormControl type="search" placeholder="Search..." />
             </InputGroup>
-            <Button variant="danger" size="lg" className="me-1 float-end" id="wd-add-assignment-btn">
+            <Button variant="danger" 
+            size="lg" 
+            className="me-1 float-end" 
+            id="wd-add-assignment-btn"
+            href={`/Courses/${cid}/Assignments/new/Editor`}>
                 <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
                 Assignment
             </Button>

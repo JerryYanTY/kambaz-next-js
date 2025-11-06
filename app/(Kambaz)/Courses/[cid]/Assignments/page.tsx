@@ -6,13 +6,16 @@ import { BsGripVertical } from "react-icons/bs";
 import AssignmentControlButtons from "./AssignmentControlButtons";
 import Badge from "react-bootstrap/Badge"; import AssignmentItemControlButtons from "./AssignmentItemControlButtons";
 import { LuNotebookPen } from "react-icons/lu";
-import * as db from "../../../Database"
 import { useParams } from "next/navigation";
-
+import Button from "react-bootstrap/Button";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteAssignment } from "./reducer";
+import { RootState } from "../../../store";
 
 export default function Assignments() {
   const {cid} = useParams();
-  const assignments = db.assignments;
+  const dispatch = useDispatch();
+  const assignments = useSelector((s:RootState)=>s.assignmentsReducer.assignments);
   const courseAssignments = Array.isArray(assignments)
   ? assignments.filter((a) => a.course === cid)
   : [];
@@ -31,10 +34,16 @@ export default function Assignments() {
       }
     ).replace(","," at");
   };
+
+  const onDelete = (id: string, title: string) => {
+    if (typeof window != "undefined" && window.confirm(`Delete "${title}"?`)){
+    dispatch(deleteAssignment(id) as any);
+    }
+  }
   return (
     <div id="wd-assignments">
 
-      <AssignmentsControls />
+      <AssignmentsControls cid={cid} />
       <br /> <br />
       <ListGroup id="wd-assignments" className="rounded-0">
         <ListGroupItem className="wd-assignment p-0 mb-5 fs-5 border-gray">
@@ -60,7 +69,7 @@ export default function Assignments() {
                   <LuNotebookPen className="me-2 fs-3"/>
                   <div className="flex-fill">
                     <Link
-                      href={`/Courses/${cid}/Assignments/${a._id}`}
+                      href={`/Courses/${cid}/Assignments/${a._id}/Editor`}
                       className="wd-assignment-link text-decoration-none text-black">
                         {a.title}
                       </Link>
@@ -87,6 +96,13 @@ export default function Assignments() {
                   </div>
                   <div className="d-flex align-items-center">
                     <AssignmentItemControlButtons />
+                    <Button
+                    variant="danger"
+                    size = "sm"
+                    aria-label={`Delete ${a.title}`}
+                    onClick={() => onDelete(a._id, a.title)}>
+                      Delete
+                    </Button>
                   </div>
                 </div>
               </ListGroupItem>

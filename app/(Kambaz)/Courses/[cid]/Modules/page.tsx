@@ -1,13 +1,11 @@
 "use client";
 import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import ModulesControls from "./ModulesControls";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
 import LessonControlButtons from "./LessonControlButtons";
 import { BsGripVertical } from "react-icons/bs";
 import ModuleControlButtons from "./ModuleControlButtons";
 import { useParams } from "next/navigation";
-import * as db from "../../../Database";
 import { FormControl } from "react-bootstrap";
 import { addModule, editModule, updateModule, deleteModule } from "./reducer";
 import { useSelector, useDispatch } from "react-redux";
