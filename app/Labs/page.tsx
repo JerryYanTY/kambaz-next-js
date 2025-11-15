@@ -25,6 +25,11 @@ export default function Labs() {
           </Link>
         </li>        
         <li>
+          <Link href="/Labs/Lab5" id="wd-lab5-link">
+            Lab 5: Restful
+          </Link>
+        </li>  
+        <li>
           <Link href="/" id="wd-lab3-link">
             Kambaz
           </Link>
@@ -32,6 +37,11 @@ export default function Labs() {
         <li>
           <Link href="https://github.com/JerryYanTY/kambaz-next-js" id = "wd-github-link">
           Tianyuan Yan&apos;s Github
+          </Link>
+        </li>
+        <li>
+          <Link href="https://github.com/JerryYanTY/kambaz-node-server-app/tree/a5" id = "wd-github-link">
+          Tianyuan Yan&apos;s Github (Server)
           </Link>
         </li>
       </ul>
