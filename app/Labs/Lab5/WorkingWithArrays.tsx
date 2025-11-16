@@ -1,11 +1,17 @@
 "use client";
 import React, { useState } from "react";
-import { FormControl } from "react-bootstrap";
+import { FormCheck, FormControl } from "react-bootstrap";
 
 const HTTP_SERVER = process.env.NEXT_PUBLIC_HTTP_SERVER;
 export default function WorkingWithArrays() {
   const API = `${HTTP_SERVER}/lab5/todos`;
-  const [todo, setTodo] = useState({ id: "1" });
+  const [todo, setTodo] = useState({
+    id: "1",
+    title: "NodeJS Assignment",
+    description: "Create a NodeJS server with ExpressJS",
+    due: "2021-09-09",
+    completed: false,
+  });
 
   return (
     <div id="wd-working-with-arrays">
@@ -47,6 +53,66 @@ export default function WorkingWithArrays() {
         href={`${API}/create`}
       >
         Create Todo
+      </a>
+      <hr />
+      <h3>Removing from an Array</h3>
+      <a
+        id="wd-remove-todo"
+        className="btn btn-primary float-end"
+        href={`${API}/${todo.id}/delete`}
+      >
+        Remove Todo with ID = {todo.id}{" "}
+      </a>
+      <FormControl
+        defaultValue={todo.id}
+        className="w-50"
+        onChange={(e) => setTodo({ ...todo, id: e.target.value })}
+      />
+      <hr />
+      <h3>Updating an Item in an Array</h3>
+      <a
+        href={`${API}/${todo.id}/title/${todo.title}`}
+        className="btn btn-primary float-end ms-2"
+      >
+        Update Title
+      </a>
+      <a
+        href={`${API}/${todo.id}/description/${encodeURIComponent(
+          todo.description
+        )}`}
+        className="btn btn-secondary float-end"
+      >
+        Update Description
+      </a>
+      <FormControl
+        defaultValue={todo.id}
+        className="w-25 float-start me-2"
+        onChange={(e) => setTodo({ ...todo, id: e.target.value })}
+      />
+      <FormControl
+        defaultValue={todo.title}
+        className="w-50 float-start"
+        onChange={(e) => setTodo({ ...todo, title: e.target.value })}
+      />
+      <br />
+      <FormControl
+        defaultValue={todo.description}
+        className="w-75 mt-2"
+        onChange={(e) => setTodo({ ...todo, description: e.target.value })}
+      />
+      <FormCheck
+        className="mt-2"
+        id="wd-todo-completed"
+        type="checkbox"
+        label="Completed"
+        checked={todo.completed}
+        onChange={(e) => setTodo({ ...todo, completed: e.target.checked })}
+      />
+      <a
+        href={`${API}/${todo.id}/completed/${todo.completed}`}
+        className="btn btn-warning mt-2"
+      >
+        Update Completed
       </a>
       <hr />
     </div>
