@@ -1,12 +1,12 @@
 "use client";
 import { FormControl } from "react-bootstrap";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import { v4 as uuidv4 } from "uuid";
 import Link from "next/link";
 import type {User} from "../Account/reducer";
 import { Row, Col } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-import * as db from "../Database";
+import * as client from "../Courses/client";
 import { useDispatch, useSelector } from "react-redux";
 import { addNewCourse, deleteCourse, updateCourse, setCourses } from "../Courses/reducer";
 import { RootState } from "../store";
@@ -14,7 +14,6 @@ import { CardBody, CardImg, CardText, CardTitle, Card } from "react-bootstrap";
 export default function Dashboard() {
   const { courses } = useSelector((state: RootState) => state.coursesReducer);
   const currentUser = useSelector<RootState, User|null>((s) => s.accountReducer.currentUser);
-  const { enrollments } = db; 
   const dispatch = useDispatch();
   // const [courses, setCourses] = useState<any[]>(db.courses);
   const [course, setCourse] = useState<any>({
@@ -28,6 +27,18 @@ export default function Dashboard() {
     image: "/images/reactjs.jpg",
     description: "Some description",
   });
+  const fetchCourses = async () => {
+    try {
+      const courses = await client.findMyCourses();
+      dispatch(setCourses(courses));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    fetchCourses();
+  }, [currentUser]);
+
 
   if (!currentUser) {
     return <p>Please log in to view your courses.</p>;
@@ -88,12 +99,7 @@ export default function Dashboard() {
       <div id="wd-dashboard-courses">
         <Row xs={1} md={5} className="g-4">
 
-          {courses.filter((course) =>
-          enrollments.some(
-            (enrollment) =>
-              enrollment.user === currentUser._id &&
-              enrollment.course === course._id
-            ))
+          {courses
           .map((course) => (
             <Col
               key={course._id}
