@@ -7,7 +7,7 @@ import * as coursesClient from "../Courses/client";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 
-export default function EnrollmentsPage() {
+export default function EnrollmentsPage() { 
   const [courses, setCourses] = useState<any[]>([]);
   const [enrollments, setEnrollments] = useState<any[]>([]);
   const currentUser = useSelector(
