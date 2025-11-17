@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-assign-module-variable */
 "use client";
 import { useState, useEffect  } from "react";
 import ModulesControls from "./ModulesControls";
@@ -22,6 +23,13 @@ export default function Modules() {
     const modules = await client.findModulesForCourse(cid as string);
     dispatch(setModules(modules));
   };
+  const onCreateModuleForCourse = async () => {
+    if (!cid) return;
+    const newModule = { name: moduleName, course: cid };
+    const module = await client.createModuleForCourse(cid, newModule);
+    dispatch(setModules([...modules, module]));
+  };
+
   useEffect(() => {
     fetchModules();
   }, []);
@@ -44,9 +52,7 @@ export default function Modules() {
     <div>
       <ModulesControls setModuleName={setModuleName}
       moduleName={moduleName}
-      addModule={() => {
-      dispatch(addModule({ name:moduleName, course: cid}));
-      setModuleName("");}} />
+      addModule={onCreateModuleForCourse} />
       <br /> <br />
       <br />
       <br />
