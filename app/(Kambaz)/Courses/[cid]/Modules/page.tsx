@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect  } from "react";
 import ModulesControls from "./ModulesControls";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
 import LessonControlButtons from "./LessonControlButtons";
@@ -7,15 +7,25 @@ import { BsGripVertical } from "react-icons/bs";
 import ModuleControlButtons from "./ModuleControlButtons";
 import { useParams } from "next/navigation";
 import { FormControl } from "react-bootstrap";
-import { addModule, editModule, updateModule, deleteModule } from "./reducer";
+import { setModules, addModule, editModule, updateModule, deleteModule } from "./reducer";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
+import * as client from "../../client";
+
 
 export default function Modules() {
   const { modules} = useSelector((state: RootState) => state.modulesReducer);
   const { cid } = useParams();
   const [moduleName, setModuleName] = useState("");
   const dispatch = useDispatch();
+  const fetchModules = async () => {
+    const modules = await client.findModulesForCourse(cid as string);
+    dispatch(setModules(modules));
+  };
+  useEffect(() => {
+    fetchModules();
+  }, []);
+
   // const addModule = () =>{
   //   setModules([...modules, {_id: uuidv4(), name: moduleName, course: cid, lessons: []}]);
   //   setModuleName("");
@@ -42,7 +52,6 @@ export default function Modules() {
       <br />
       <ListGroup id="wd-modules" className="rounded-0">
         {modules
-          .filter((module: any) => module.course === cid)
           .map((module: any) => (
             <ListGroupItem 
             key = {module._id}
