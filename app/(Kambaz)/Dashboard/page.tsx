@@ -90,6 +90,11 @@ export default function Dashboard() {
   return (
     <div id="wd-dashboard">
       <h1 id="wd-dashboard-title">Dashboard</h1> <hr />
+      <div className="d-flex justify-content-end mb-2">
+        <Link href="/Enrollments" className="text-decoration-none">
+          <Button variant="outline-primary">Manage Enrollments</Button>
+        </Link>
+      </div>
       <h5>
         New Course
         <Button

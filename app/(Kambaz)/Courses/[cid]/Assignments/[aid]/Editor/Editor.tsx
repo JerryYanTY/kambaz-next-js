@@ -30,7 +30,7 @@ export default function AssignmentEditor() {
 
   // Typed selector with RootState
   const assignments = useSelector((s: RootState) => s.assignmentsReducer.assignments);
-  const existing = (assignments).find((a) => a.course === cid && a._id === aid) ?? null;
+  const existing = (assignments as any[]).find((a) => a.course === cid && a._id === aid) ?? null;
   const isNew = aid === "new";
 
   // controlled fields

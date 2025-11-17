@@ -1,6 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState ={
+export type Assignment = Record<string, any>;
+
+type AssignmentsState = {
+    assignments: Assignment[];
+};
+
+const initialState: AssignmentsState ={
     assignments: [],
 }
 
@@ -9,10 +15,10 @@ const assignmentsSlice = createSlice({
     initialState,
     reducers: {
         setAssignments: (state, { payload }) => {
-            state.assignments = payload as any;
+            state.assignments = payload as Assignment[];
         },
         addAssignment: (state, {payload: assignment})=> {
-            state.assignments = [...state.assignments, assignment] as any;
+            state.assignments = [...state.assignments, assignment] as Assignment[];
         },
 
         deleteAssignment: (state, { payload: assignmentId}) => {
@@ -24,7 +30,7 @@ const assignmentsSlice = createSlice({
         updateAssignment: (state, { payload: assignment}) => {
             state.assignments = state.assignments.map((a:any)=>
             a._id === assignment._id? assignment : a
-        )as any;
+        )as Assignment[];
         },
 
     },
