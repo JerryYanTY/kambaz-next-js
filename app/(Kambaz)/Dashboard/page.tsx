@@ -35,10 +35,15 @@ export default function Dashboard() {
       console.error(error);
     }
   };
+
+  const onAddNewCourse = async () => {
+    const newCourse = await client.createCourse(course);
+    dispatch(setCourses([ ...courses, newCourse ]));
+  };
+
   useEffect(() => {
     fetchCourses();
   }, [currentUser]);
-
 
   if (!currentUser) {
     return <p>Please log in to view your courses.</p>;
@@ -70,7 +75,7 @@ export default function Dashboard() {
         <Button
           className="btn btn-primary float-end"
           id="wd-add-new-course-click"
-          onClick={()=>dispatch(addNewCourse(course))}
+          onClick={onAddNewCourse}
         >
           Add
         </Button>
