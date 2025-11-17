@@ -26,8 +26,17 @@ export default function Modules() {
   const onCreateModuleForCourse = async () => {
     if (!cid) return;
     const newModule = { name: moduleName, course: cid };
-    const module = await client.createModuleForCourse(cid, newModule);
+    const module = await client.createModuleForCourse(cid as string, newModule);
     dispatch(setModules([...modules, module]));
+  };
+  const onRemoveModule = async (moduleId: string) => {
+    await client.deleteModule(moduleId);
+    dispatch(setModules(modules.filter((m: any) => m._id !== moduleId)));
+  };
+  const onUpdateModule = async (module: any) => {
+    await client.updateModule(module);
+    const newModules = modules.map((m: any) => m._id === module._id ? module : m );
+    dispatch(setModules(newModules));
   };
 
   useEffect(() => {
@@ -74,7 +83,7 @@ export default function Modules() {
                   }
                   onKeyDown={(e)=> {
                     if (e.key == "Enter") {
-                      dispatch(updateModule({...module, editing:false}));
+                      onUpdateModule({ ...module, editing: false });
                     }
                   }}
                   defaultValue={module.name}/>
@@ -82,9 +91,7 @@ export default function Modules() {
                 <ModuleControlButtons 
                 moduleId={module._id}
                 deleteModule={(moduleId)=>
-                {
-                  dispatch(deleteModule(moduleId));
-                }
+                  onRemoveModule(moduleId)
                 }
                 editModule={(moduleId)=> {
                   dispatch(editModule(moduleId));
