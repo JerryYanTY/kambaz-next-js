@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form} from "react-bootstrap";
 import { FormLabel, FormControl } from "react-bootstrap";
 import { InputGroup } from "react-bootstrap";
@@ -10,6 +10,7 @@ import Button from "react-bootstrap/Button";
 import { addAssignment, updateAssignment } from "../../reducer";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../../../store";
+import * as client from "../../client";
 
 
 const toLocalDateTime = (iso: string | null) => {
@@ -46,11 +47,37 @@ export default function AssignmentEditor() {
     existing?.submission_types ?? ["online_upload"]
   );
 
+  const applyAssignmentToState = (assignment: any) => {
+    setTitle(assignment?.title ?? "");
+    setDescription(assignment?.description ?? "");
+    setPoints(assignment?.points ?? 0);
+    setAssignTo(assignment?.assign_to ?? "everyone");
+    setDue(toLocalDateTime(assignment?.due ?? null));
+    setAvailableFrom(toLocalDateTime(assignment?.available_from ?? null));
+    setAvailableUntil(toLocalDateTime(assignment?.available_until ?? null));
+    setSubmissionTypes(assignment?.submission_types ?? ["online_upload"]);
+  };
+
+  useEffect(() => {
+    if (existing) {
+      applyAssignmentToState(existing);
+      return;
+    }
+    if (!isNew && aid && typeof aid === "string") {
+      client.findAssignmentById(aid).then((assignment) => {
+        if (!assignment) return;
+        applyAssignmentToState(assignment);
+        dispatch(addAssignment(assignment) as any);
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [aid, cid, isNew, existing]);
+
 
 
   const backHref = `/Courses/${cid}/Assignments`;
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const payload: any = {
       ...(existing?._id ? { _id: existing._id } : {}),
       title,
@@ -67,9 +94,14 @@ export default function AssignmentEditor() {
     };
 
     if (isNew) {
-      dispatch(addAssignment(payload) as any);
+      const newAssignment = await client.createAssignment(cid as string, payload);
+      dispatch(addAssignment(newAssignment) as any);
     } else {
-      dispatch(updateAssignment(payload as any) as any);
+      const updatedAssignment = await client.updateAssignment({
+        ...payload,
+        _id: existing?._id ?? aid,
+      });
+      dispatch(updateAssignment(updatedAssignment as any) as any);
     }
     // no router push; Save button is a Link that navigates after onClick fires
   };

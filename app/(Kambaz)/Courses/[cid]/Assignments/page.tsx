@@ -9,8 +9,10 @@ import { LuNotebookPen } from "react-icons/lu";
 import { useParams } from "next/navigation";
 import Button from "react-bootstrap/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteAssignment } from "./reducer";
+import { deleteAssignment, setAssignments } from "./reducer";
 import { RootState } from "../../../store";
+import { useEffect } from "react";
+import * as client from "./client";
 
 export default function Assignments() {
   const {cid} = useParams();
@@ -35,11 +37,21 @@ export default function Assignments() {
     ).replace(","," at");
   };
 
-  const onDelete = (id: string, title: string) => {
+  const fetchAssignments = async () => {
+    if (!cid) return;
+    const data = await client.findAssignmentsForCourse(cid as string);
+    dispatch(setAssignments(data));
+  };
+
+  const onDelete = async (id: string, title: string) => {
     if (typeof window != "undefined" && window.confirm(`Delete "${title}"?`)){
-    dispatch(deleteAssignment(id) as any);
+      await client.deleteAssignment(id);
+      dispatch(deleteAssignment(id) as any);
     }
   }
+  useEffect(() => {
+    fetchAssignments();
+  }, [cid]);
   return (
     <div id="wd-assignments">
 
