@@ -1,5 +1,5 @@
 import { IoEllipsisVertical } from "react-icons/io5";
-import GreenCheckmark from "../Assignments/GreenCheckmark";
+import GreenCheckmark from "./GreenCheckmark";
 import { BsPlus } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa";
 import { FaPencil } from "react-icons/fa6";
