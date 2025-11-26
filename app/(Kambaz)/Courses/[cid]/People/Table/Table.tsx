@@ -13,6 +13,8 @@ import { useEffect, useState } from "react";
 import * as usersClient from "../../../../Users/client";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../store";
+import PeopleDetails from "../Details";
+import Link from "next/link";
 
 const emptyUser = {
   firstName: "",
@@ -30,7 +32,9 @@ type PeopleTableProps = {
   fetchUsers?: () => void;
 };
 
-export default function PeopleTable({ users = [], fetchUsers }: PeopleTableProps) {
+export default function PeopleTable({ users = [], fetchUsers }: PeopleTableProps ) {
+  const [showDetails, setShowDetails] = useState(false);
+  const [showUserId, setShowUserId] = useState<string | null>(null);
   const { cid } = useParams();
   const currentUser = useSelector(
     (s: RootState) => s.accountReducer.currentUser
@@ -84,6 +88,19 @@ export default function PeopleTable({ users = [], fetchUsers }: PeopleTableProps
 
   return (
     <div id="wd-people-table">
+      {showDetails && (
+       <PeopleDetails
+         uid={showUserId}
+         onClose={() => {
+           setShowDetails(false);
+            if (fetchUsers) {
+              fetchUsers();
+            } else {
+              loadPeople();
+            }
+          }}/>
+     )}
+
       {isFaculty && cid && (
         <div className="mb-3 p-3 border rounded">
           <h5 className="mb-3">{editingId ? "Edit User" : "Add User"}</h5>
@@ -186,9 +203,15 @@ export default function PeopleTable({ users = [], fetchUsers }: PeopleTableProps
           {people.map((user: any) => (
             <tr key={user._id}>
               <td className="wd-full-name text-nowrap">
+              <span className="text-decoration-none"
+                 onClick={() => {
+                   setShowDetails(true);
+                   setShowUserId(user._id);
+                 }} >
                 <FaUserCircle className="me-2 fs-1 text-secondary" />
                 <span className="wd-first-name">{user.firstName}</span>{" "}
                 <span className="wd-last-name">{user.lastName}</span>
+                </span>
               </td>
               <td className="wd-login-id">{user.loginId}</td>
               <td className="wd-section">{user.section}</td>
