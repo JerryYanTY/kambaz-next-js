@@ -17,31 +17,35 @@ import * as client from "../../client";
 export default function Modules() {
   const { modules} = useSelector((state: RootState) => state.modulesReducer);
   const { cid } = useParams();
+  const cidStr = Array.isArray(cid) ? cid[0] : cid ?? "";
   const [moduleName, setModuleName] = useState("");
   const dispatch = useDispatch();
   const fetchModules = async () => {
-    const modules = await client.findModulesForCourse(cid as string);
+    if (!cidStr) return;
+    const modules = await client.findModulesForCourse(cidStr);
     dispatch(setModules(modules));
   };
   const onCreateModuleForCourse = async () => {
-    if (!cid) return;
-    const newModule = { name: moduleName, course: cid };
-    const module = await client.createModuleForCourse(cid as string, newModule);
+    if (!cidStr) return;
+    const newModule = { name: moduleName, course: cidStr };
+    const module = await client.createModuleForCourse(cidStr, newModule);
     dispatch(setModules([...modules, module]));
   };
   const onRemoveModule = async (moduleId: string) => {
-    await client.deleteModule(cid, moduleId);
+    if (!cidStr) return;
+    await client.deleteModule(cidStr, moduleId);
     dispatch(setModules(modules.filter((m: any) => m._id !== moduleId)));
   };
   const onUpdateModule = async (module: any) => {
-    await client.updateModule(cid, module);
+    if (!cidStr) return;
+    await client.updateModule(cidStr, module);
     const newModules = modules.map((m: any) => m._id === module._id ? module : m );
     dispatch(setModules(newModules));
   };
 
   useEffect(() => {
     fetchModules();
-  }, []);
+  }, [cidStr]);
 
   // const addModule = () =>{
   //   setModules([...modules, {_id: uuidv4(), name: moduleName, course: cid, lessons: []}]);
