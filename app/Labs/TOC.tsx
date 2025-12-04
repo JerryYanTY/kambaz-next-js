@@ -35,12 +35,12 @@ export default function TOC() {
       Kambaz </NavLink>
   </NavItem>
   <NavItem>
-    <NavLink href="https://github.com/JerryYanTY/kambaz-next-js/tree/a5" as={Link}>
-      My kambaz-next-js Github </NavLink>
+    <NavLink href="https://github.com/JerryYanTY/kambaz-next-js/tree/Final(quiz)" as={Link}>
+      My Final kambaz-next-js Github </NavLink>
   </NavItem>
   <NavItem>
-    <NavLink href="https://github.com/JerryYanTY/kambaz-node-server-app/tree/a5" as={Link}>
-      My kambaz-node-server Github </NavLink>
+    <NavLink href="https://github.com/JerryYanTY/kambaz-node-server-app/tree/Final(Quiz)" as={Link}>
+      My Final kambaz-node-server Github </NavLink>
   </NavItem>
   <NavItem>
     <NavLink href="https://kambaz-node-server-app-rbtv.onrender.com/" as={Link}>

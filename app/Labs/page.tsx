@@ -2,7 +2,7 @@ import Link from "next/link";
 export default function Labs() {
   return (
     <div id="wd-labs">
-      <h1>Tianyuan Yan&apos;s Labs (Section 05)</h1>
+      <h1>Tianyuan Yan&apos;s Labs and Final Project (Section 05)</h1>
       <ul>
         <li>
           <Link href="/Labs/Lab1" id="wd-lab1-link">
@@ -35,13 +35,13 @@ export default function Labs() {
           </Link>
         </li>
         <li>
-          <Link href="https://github.com/JerryYanTY/kambaz-next-js" id = "wd-github-link">
-          Tianyuan Yan&apos;s Github
+          <Link href="https://github.com/JerryYanTY/kambaz-next-js/tree/Final(quiz)" id = "wd-github-link">
+          Tianyuan Yan&apos;s Github for Final Project
           </Link>
         </li>
         <li>
-          <Link href="https://github.com/JerryYanTY/kambaz-node-server-app/tree/a5" id = "wd-github-link">
-          Tianyuan Yan&apos;s Github (Server)
+          <Link href="https://github.com/JerryYanTY/kambaz-node-server-app/tree/Final(Quiz)" id = "wd-github-link">
+          Tianyuan Yan&apos;s Github (Server) for Final Project
           </Link>
         </li>
       </ul>
