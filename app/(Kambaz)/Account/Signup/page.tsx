@@ -1,5 +1,5 @@
 "use client";
-import { FormControl } from "react-bootstrap";
+import { FormControl, FormSelect } from "react-bootstrap";
 import Link from "next/link";
 import * as client from "../client";
 import { redirect } from "next/navigation";
@@ -9,7 +9,7 @@ import Button from "react-bootstrap/Button";
 import { setCurrentUser } from "../reducer";
 
 export default function Signup() {
-  const [user, setUser] = useState<any>({});
+  const [user, setUser] = useState<any>({ role: "STUDENT" });
   const dispatch = useDispatch();
   const signup = async () => {
     const currentUser = await client.signup(user);
@@ -33,6 +33,14 @@ export default function Signup() {
         placeholder="password"
         type="password"
       />
+      <FormSelect
+        value={user.role}
+        onChange={(e) => setUser({ ...user, role: e.target.value })}
+        className="mb-2"
+      >
+        <option value="STUDENT">Student</option>
+        <option value="FACULTY">Faculty</option>
+      </FormSelect>
       <Button
         onClick={signup}
         className="wd-signup-btn btn btn-primary mb-2 w-100"
