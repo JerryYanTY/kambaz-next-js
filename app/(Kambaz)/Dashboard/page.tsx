@@ -42,6 +42,7 @@ export default function Dashboard() {
       dispatch(setCourses(courses));
     } catch (error) {
       console.error(error);
+      dispatch(setCourses([]));
     }
   };
 
