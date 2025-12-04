@@ -1,4 +1,6 @@
+"use client";
 import { redirect } from "next/navigation";
-export default function landing() {
+
+export default function RootRedirect() {
   redirect("/Labs");
 }

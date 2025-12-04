@@ -31,7 +31,7 @@ export default function TOC() {
       Lab 5 </NavLink>
   </NavItem>
   <NavItem>
-    <NavLink href="/" as={Link}>
+    <NavLink href="/Account/Signin" as={Link}>
       Kambaz </NavLink>
   </NavItem>
   <NavItem>
