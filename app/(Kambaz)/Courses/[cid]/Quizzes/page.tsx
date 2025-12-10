@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Badge,
   Button,
@@ -37,6 +37,7 @@ export default function QuizPage() {
   const { cid } = useParams();
   const router = useRouter();
   const dispatch = useDispatch();
+  const [sortBy, setSortBy] = useState<"TITLE" | "DUE" | "AVAILABLE">("TITLE");
   const { quizzes, attemptsByQuiz } = useSelector((s: RootState) => s.quizzesReducer);
   const currentUser = useSelector(
     (s: RootState) => s.accountReducer.currentUser
@@ -45,7 +46,23 @@ export default function QuizPage() {
   const isFaculty =
     currentUser?.role === "FACULTY" || currentUser?.role === "ADMIN";
 
-  const courseQuizzes = quizzes.filter((q: any) => q.course === cid);
+  const courseQuizzes = useMemo(() => {
+    const filtered = quizzes.filter((q: any) => q.course === cid);
+    const sorted = [...filtered].sort((a, b) => {
+      if (sortBy === "TITLE") {
+        return (a.title || "").localeCompare(b.title || "");
+      }
+      if (sortBy === "DUE") {
+        return new Date(a.due || 0).getTime() - new Date(b.due || 0).getTime();
+      }
+      // AVAILABLE
+      return (
+        new Date(a.available_from || 0).getTime() -
+        new Date(b.available_from || 0).getTime()
+      );
+    });
+    return sorted;
+  }, [quizzes, cid, sortBy]);
 
   const loadQuizzes = async () => {
     if (!cid) return;
@@ -112,7 +129,7 @@ export default function QuizPage() {
 
   return (
     <div id="wd-quizzes">
-      <div className="d-flex align-items-center justify-content-between mb-3">
+      <div className="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
         <div>
           <h2 className="mb-0">Quizzes</h2>
           <p className="text-secondary small mb-0">
@@ -120,11 +137,31 @@ export default function QuizPage() {
             manage quizzes.
           </p>
         </div>
-        {isFaculty && (
-          <Button variant="danger" onClick={handleCreateAndEdit}>
-            + Quiz
-          </Button>
-        )}
+        <div className="d-flex align-items-center gap-2">
+          <DropdownButton
+            id="quiz-sort"
+            title={`Sort: ${
+              sortBy === "TITLE"
+                ? "Name"
+                : sortBy === "DUE"
+                  ? "Due Date"
+                  : "Available Date"
+            }`}
+            variant="outline-secondary"
+            size="sm"
+          >
+            <Dropdown.Item onClick={() => setSortBy("TITLE")}>Name</Dropdown.Item>
+            <Dropdown.Item onClick={() => setSortBy("DUE")}>Due Date</Dropdown.Item>
+            <Dropdown.Item onClick={() => setSortBy("AVAILABLE")}>
+              Available Date
+            </Dropdown.Item>
+          </DropdownButton>
+          {isFaculty && (
+            <Button variant="danger" onClick={handleCreateAndEdit}>
+              + Quiz
+            </Button>
+          )}
+        </div>
       </div>
 
       {courseQuizzes.length === 0 && (
