@@ -209,7 +209,7 @@ export default function QuizPage() {
                   </Link>
                 </div>
                 <span className="text-secondary small">
-                  {availabilityStatus(quiz)} | Due {formatDate(quiz.due)} | {points ?? 0} pts | {questionCount} questions
+                  {availabilityStatus(quiz)} | Due {formatDate(quiz.due)} | Available Until {formatDate(quiz.available_until)} | {points ?? 0} pts | {questionCount} questions
                   {latest && !isFaculty
                     ? ` | Last score: ${latest.score}/${latest.maxPoints ?? points}`
                     : ""}
